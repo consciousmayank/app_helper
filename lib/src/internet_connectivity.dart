@@ -1,0 +1,1 @@
+enum InternetConnectivity { active, inactive }
