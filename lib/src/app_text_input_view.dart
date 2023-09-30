@@ -20,6 +20,7 @@ class AppTextInputView extends StatelessWidget {
     this.hint,
     this.errorText,
     this.inputFormatters,
+    this.maximumLinesSupported = 1,
     this.defaultTextAlignment = TextAlign.start,
     this.textCapitalization = TextCapitalization.none,
     this.keyboardType = TextInputType.text,
@@ -49,6 +50,7 @@ class AppTextInputView extends StatelessWidget {
     this.errorText,
     this.inputFormatters,
     this.defaultTextAlignment = TextAlign.start,
+    this.maximumLinesSupported = 1,
     this.textCapitalization = TextCapitalization.none,
   })  : keyboardType = TextInputType.visiblePassword,
         super(key: key);
@@ -71,6 +73,7 @@ class AppTextInputView extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final TextCapitalization textCapitalization;
   final TextAlign defaultTextAlignment;
+  final int maximumLinesSupported;
 
   InputDecoration getInputDecorationForForms({
     required BuildContext context,
@@ -117,6 +120,7 @@ class AppTextInputView extends StatelessWidget {
         context: context,
         innerHintText: hint,
       ),
+      maxLines: maximumLinesSupported,
       textAlign: defaultTextAlignment,
       controller: controller,
       focusNode: focusNode,
