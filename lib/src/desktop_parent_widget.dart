@@ -4,7 +4,7 @@ import 'package:helper_package/helper_package.dart';
 class DesktopParentWidget extends StatelessWidget {
   final AppBar? appBar;
   final Widget body;
-  final AppIconWidget? backgroundImage;
+  final Widget? backgroundImage;
   const DesktopParentWidget({
     super.key,
     this.appBar,
