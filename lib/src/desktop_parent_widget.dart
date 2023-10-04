@@ -5,10 +5,15 @@ class DesktopParentWidget extends StatelessWidget {
   final AppBar? appBar;
   final Widget body;
   final Widget? backgroundImage;
+  final Color? containerColor;
+  final double? desktopMaxContentWidth, desktopMaxContentHeight;
   const DesktopParentWidget({
     super.key,
     this.appBar,
     this.backgroundImage,
+    this.containerColor,
+    this.desktopMaxContentHeight,
+    this.desktopMaxContentWidth,
     required this.body,
   });
 
@@ -17,24 +22,22 @@ class DesktopParentWidget extends StatelessWidget {
     return Scaffold(
       appBar: appBar,
       body: Center(
-        child: backgroundImage!=null ?
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            backgroundImage!,
-            centerContainer()
-          ],
-        ) : centerContainer(),
+        child: backgroundImage != null
+            ? Stack(
+                alignment: Alignment.center,
+                children: [backgroundImage!, centerContainer()],
+              )
+            : centerContainer(),
       ),
     );
   }
 
   Widget centerContainer() {
     return Container(
-          color: Colors.green,
-          width: kdDesktopMaxContentWidth,
-          height: kdDesktopMaxContentHeight,
-          child: body,
-        );
+      color: containerColor,
+      width: desktopMaxContentWidth ?? kdDesktopMaxContentWidth,
+      height: desktopMaxContentHeight ?? kdDesktopMaxContentHeight,
+      child: body,
+    );
   }
 }
