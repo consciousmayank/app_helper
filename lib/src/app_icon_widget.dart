@@ -10,6 +10,7 @@ const double iconBorderRadius = 10;
 class AppIconWidget extends StatelessWidget {
   final IconTypes iconType;
   final CustomPainter? painter;
+  final BoxFit imageFit;
   final bool showRoundedBorder;
   final Size? size;
   final String? iconsBase64String, svgString;
@@ -17,6 +18,7 @@ class AppIconWidget extends StatelessWidget {
   const AppIconWidget.painter({
     Key? key,
     required this.painter,
+    this.imageFit = BoxFit.contain,
     this.size,
   })  : iconType = IconTypes.painter,
         showRoundedBorder = true,
@@ -27,6 +29,7 @@ class AppIconWidget extends StatelessWidget {
   const AppIconWidget.painterNonBordered({
     Key? key,
     required this.painter,
+    this.imageFit = BoxFit.contain,
     this.size,
   })  : iconType = IconTypes.painter,
         showRoundedBorder = false,
@@ -38,6 +41,7 @@ class AppIconWidget extends StatelessWidget {
     Key? key,
     this.size,
     required this.svgString,
+    this.imageFit = BoxFit.contain,
   })  : iconType = IconTypes.svg,
         painter = null,
         showRoundedBorder = true,
@@ -48,6 +52,7 @@ class AppIconWidget extends StatelessWidget {
     Key? key,
     this.size,
     required this.svgString,
+    this.imageFit = BoxFit.contain,
   })  : iconType = IconTypes.svg,
         painter = null,
         showRoundedBorder = false,
@@ -57,6 +62,7 @@ class AppIconWidget extends StatelessWidget {
   const AppIconWidget.png({
     Key? key,
     this.size,
+    this.imageFit = BoxFit.contain,
   })  : iconType = IconTypes.png,
         painter = null,
         showRoundedBorder = true,
@@ -67,6 +73,7 @@ class AppIconWidget extends StatelessWidget {
   const AppIconWidget.borderedBase64({
     Key? key,
     this.size,
+    this.imageFit = BoxFit.contain,
     required this.iconsBase64String,
   })  : iconType = IconTypes.bas64,
         painter = null,
@@ -109,6 +116,7 @@ class AppIconWidget extends StatelessWidget {
           svgString!,
           height: size?.height ?? 20,
           width: size?.width ?? 20,
+          fit: imageFit,
         );
       case IconTypes.png:
         // in future if we need to return an svg.
@@ -118,32 +126,30 @@ class AppIconWidget extends StatelessWidget {
   }
 
   Widget getImageFrom({
-  String? base64String,
-  required Size imageSize,
-  Widget? imageErrorWidget,
-}) {
-  if (base64String == null) {
-    return const Icon(Icons.error);
-  } else {
-    Uint8List image = const Base64Decoder()
-        .convert(base64String.replaceAll(RegExp(r'\s+'), ''));
-
-    if (image.isNotEmpty) {
-      return Image.memory(
-        image,
-        height: imageSize.height,
-        width: imageSize.width,
-        fit: BoxFit.cover,
-        errorBuilder: (context, error, stackTrace) =>
-            imageErrorWidget ??
-            const Icon(Icons.error),
-      );
+    String? base64String,
+    required Size imageSize,
+    Widget? imageErrorWidget,
+  }) {
+    if (base64String == null) {
+      return const Icon(Icons.error);
     } else {
-      return imageErrorWidget ??
-          const Icon(Icons.error);
+      Uint8List image = const Base64Decoder()
+          .convert(base64String.replaceAll(RegExp(r'\s+'), ''));
+
+      if (image.isNotEmpty) {
+        return Image.memory(
+          image,
+          height: imageSize.height,
+          width: imageSize.width,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) =>
+              imageErrorWidget ?? const Icon(Icons.error),
+        );
+      } else {
+        return imageErrorWidget ?? const Icon(Icons.error);
+      }
     }
   }
-}
 }
 
 class CustomPainterWidgetWidget extends StatelessWidget {
