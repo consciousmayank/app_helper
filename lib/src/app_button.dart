@@ -1,5 +1,3 @@
-import 'package:check/ui/common/index.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 const double appButtonHeight = 54;
@@ -13,6 +11,8 @@ class AppButton extends StatelessWidget {
     this.appButtonTextFontSize,
     this.width,
     this.height = appButtonHeight,
+    required this.btnBg,
+    this.buttonTextColor = Colors.white,
   })  : icon = null,
         type = AppButtonType.text,
         super(key: key);
@@ -22,6 +22,8 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     required this.icon,
     this.width,
+    required this.btnBg,
+    this.buttonTextColor = Colors.white,
     this.height = appButtonHeight,
   })  : appButtonText = null,
         type = AppButtonType.centerIcon,
@@ -34,6 +36,7 @@ class AppButton extends StatelessWidget {
   final double? width, appButtonTextFontSize;
   final Widget? icon;
   final AppButtonType type;
+  final Color btnBg, buttonTextColor;
 
   Widget getProperChild() {
     switch (type) {
@@ -44,28 +47,24 @@ class AppButton extends StatelessWidget {
       case AppButtonType.centerIcon:
         return icon!;
       case AppButtonType.leftIconCenterText:
-      // TODO: Handle this case.
       case AppButtonType.rightIconCenterText:
-      // TODO: Handle this case.
       case AppButtonType.leftIconRightText:
-      // TODO: Handle this case.
       case AppButtonType.righticonLeftText:
-      // TODO: Handle this case.
-      default:
         return AppButtonTextWidget(
           appButtonText: appButtonText,
           fontSize: appButtonTextFontSize,
+          buttonTextColor: buttonTextColor,
         );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = BorderRadius.circular(appButtonBorderRadius.sp);
+    final borderRadius = BorderRadius.circular(appButtonBorderRadius);
     return Container(
-      width: width?.w,
-      height: height.h,
-      decoration: BoxDecoration(borderRadius: borderRadius, color: color5ef5),
+      width: width,
+      height: height,
+      decoration: BoxDecoration(borderRadius: borderRadius, color: btnBg),
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
@@ -84,8 +83,10 @@ class AppButton extends StatelessWidget {
 }
 
 class AppButtonTextWidget extends StatelessWidget {
+  final Color buttonTextColor;
   const AppButtonTextWidget({
     Key? key,
+    this.buttonTextColor = Colors.white,
     required this.appButtonText,
     this.fontSize,
   }) : super(key: key);
@@ -99,7 +100,10 @@ class AppButtonTextWidget extends StatelessWidget {
         text: TextSpan(
       text: appButtonText!,
       style: TextStyle(
-          fontSize: fontSize, color: colorWhite, fontWeight: FontWeight.w700),
+        fontSize: fontSize,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+      ),
     ));
   }
 }
