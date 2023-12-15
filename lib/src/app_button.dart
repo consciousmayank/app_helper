@@ -42,7 +42,10 @@ class AppButton extends StatelessWidget {
     switch (type) {
       case AppButtonType.text:
         return AppButtonTextWidget(
-            appButtonText: appButtonText, fontSize: appButtonTextFontSize);
+          appButtonText: appButtonText,
+          fontSize: appButtonTextFontSize,
+          buttonTextColor: buttonTextColor,
+        );
 
       case AppButtonType.centerIcon:
         return icon!;
