@@ -4,9 +4,11 @@ import 'package:helper_package/helper_package.dart';
 class ThemePopUpMenuWidget extends StatelessWidget {
   final List<PopUpMenuOptions> options;
   final Offset? offset;
+  final Icon icon;
   const ThemePopUpMenuWidget({
     super.key,
     required this.options,
+    this.icon = const Icon(Icons.more_vert_outlined),
     this.offset,
   });
 
@@ -41,9 +43,9 @@ class ThemePopUpMenuWidget extends StatelessWidget {
         // if value 1 show dialog
         options.elementAt(value).onMenuItemSelected()?.call();
       },
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Icon(Icons.more_vert_outlined),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: icon,
       ),
     );
   }
